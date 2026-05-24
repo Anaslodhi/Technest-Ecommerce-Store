@@ -72,7 +72,7 @@ npm install
 
 3. Create a .env.local file in the root directory and add the backend URL:
 NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
-*(For deployment, you won't need to change this if both are deployed together on Vercel)*
+*(For deployment, you will change this to your live Vercel backend URL)*
 
 4. Start the development server:
 npm run dev
@@ -119,11 +119,13 @@ The backend exposes the following primary endpoints for the chatbot:
 ---
 
 ## 🌐 Deployment Process
-🚀 **Deployment**: Vercel (Frontend & Backend): Connect the GitHub repository to Vercel. Ensure build commands are set to npm run build and output directory is .next. Add environment variables in the Vercel dashboard.
+🚀 **Deployment**: This project uses a professional two-tier deployment architecture on Vercel to avoid conflicts between Next.js and Python serverless functions.
+1. **Backend Deployment**: Create a new Vercel project with the Root Directory set to `backend`. Choose Framework Preset as `Other`. Add the database and API keys to the Environment Variables.
+2. **Frontend Deployment**: Create a separate Vercel project leaving the Root Directory as default (`./`). Add `NEXT_PUBLIC_BACKEND_URL` pointing to the deployed backend URL, and a `NEXTAUTH_SECRET` for secure authentication.
 
 ---
 
 ## 🔗 Important Links
-🔗 Live Demo Link: [INSERT VERCEL LINK HERE]
-🔗 **Backend API Link**: [INSERT VERCEL API LINK HERE]
-🔗 Demo Video Link: [INSERT VIDEO LINK HERE]
+🔗 **Live Demo Link**: https://technest-frontend.vercel.app
+🔗 **Backend API Link**: https://technest-backend.vercel.app
+🔗 **Demo Video Link**: [Please insert YouTube/Drive Video Link here]
