@@ -5,7 +5,4 @@ export default defineConfig({
   datasource: {
     url: process.env.DIRECT_URL as string,
   },
-  migrate: {
-    url: process.env.DIRECT_URL as string,
-  },
 });

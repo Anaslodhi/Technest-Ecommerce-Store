@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/lib/cartContext";
-import { useSession, signOut } from "next-auth/react";
+import { useCurrency } from "@/lib/currencyContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -25,7 +25,21 @@ export default function Navbar() {
   const { getItemCount } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { data: session } = useSession();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("User");
+  
+  const { currency, setCurrency } = useCurrency();
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+    const userStr = localStorage.getItem("currentUser");
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        if (user && user.name) setUserName(user.name);
+      } catch (e) {}
+    }
+  }, [pathname]); // Re-check on route change
 
   const itemCount = getItemCount();
 
@@ -99,7 +113,32 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Right Actions */}
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-4 md:flex">
+          {/* Currency Switcher */}
+          <div className="flex items-center rounded-lg bg-[var(--background-secondary)] p-1">
+            <button
+              onClick={() => setCurrency("USD")}
+              className={cn(
+                "rounded-md px-3 py-1 text-xs font-bold transition-all",
+                currency === "USD"
+                  ? "bg-violet-500 text-white shadow-md"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              )}
+            >
+              USD
+            </button>
+            <button
+              onClick={() => setCurrency("PKR")}
+              className={cn(
+                "rounded-md px-3 py-1 text-xs font-bold transition-all",
+                currency === "PKR"
+                  ? "bg-emerald-500 text-white shadow-md"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              )}
+            >
+              PKR
+            </button>
+          </div>
           <Link
             href="/cart"
             className={cn(
@@ -117,13 +156,17 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          {session ? (
+          {isLoggedIn ? (
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium text-[var(--text-primary)]">
-                {session.user?.name?.split(" ")[0] || "User"}
+                {userName}
               </span>
               <button
-                onClick={() => signOut({ callbackUrl: "/" })}
+                onClick={() => {
+                  localStorage.removeItem("isLoggedIn");
+                  localStorage.removeItem("currentUser");
+                  setIsLoggedIn(false);
+                }}
                 className="flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-medium text-[var(--text-secondary)] transition-all duration-200 hover:bg-red-500/10 hover:text-red-400"
               >
                 Logout
@@ -209,6 +252,35 @@ export default function Navbar() {
 
           <hr className="my-3 border-[var(--border-color)]" />
 
+          {/* Mobile Currency Switcher */}
+          <div className="flex items-center justify-between px-4 py-2">
+            <span className="text-sm font-medium text-[var(--text-secondary)]">Currency</span>
+            <div className="flex items-center rounded-lg bg-[var(--background-secondary)] p-1">
+              <button
+                onClick={() => setCurrency("USD")}
+                className={cn(
+                  "rounded-md px-3 py-1 text-xs font-bold transition-all",
+                  currency === "USD"
+                    ? "bg-violet-500 text-white shadow-md"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                )}
+              >
+                USD
+              </button>
+              <button
+                onClick={() => setCurrency("PKR")}
+                className={cn(
+                  "rounded-md px-3 py-1 text-xs font-bold transition-all",
+                  currency === "PKR"
+                    ? "bg-emerald-500 text-white shadow-md"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                )}
+              >
+                PKR
+              </button>
+            </div>
+          </div>
+
           <Link
             href="/cart"
             className={cn(
@@ -226,13 +298,16 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          {session ? (
+          {isLoggedIn ? (
             <button
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={() => {
+                localStorage.removeItem("isLoggedIn");
+                setIsLoggedIn(false);
+              }}
               className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-[var(--text-secondary)] transition-colors duration-200 hover:bg-red-500/10 hover:text-red-400"
             >
               <User className="h-5 w-5" />
-              Logout ({session.user?.name?.split(" ")[0] || "User"})
+              Logout
             </button>
           ) : (
             <Link

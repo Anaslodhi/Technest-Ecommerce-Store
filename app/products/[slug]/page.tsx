@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Star,
   ShoppingCart,
@@ -17,6 +18,7 @@ import { products, getProductBySlug } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import { cn } from "@/lib/utils";
 import AddToCartSection from "./AddToCartSection";
+import FormattedPrice from "@/components/FormattedPrice";
 
 // Generate static params for all product slugs
 export function generateStaticParams() {
@@ -141,17 +143,29 @@ export default async function ProductDetailPage({
                 </span>
               )}
 
-              {/* Image placeholder */}
-              <div className="flex aspect-square items-center justify-center p-12">
-                <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-3xl bg-violet-500/10">
-                    <Package className="h-12 w-12 text-violet-400/50" />
-                  </div>
-                  <span className="text-sm font-medium text-[var(--text-muted)]">
-                    {product.name}
-                  </span>
+              {product.image ? (
+                <div className="relative aspect-square w-full">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                  />
                 </div>
-              </div>
+              ) : (
+                <div className="flex aspect-square items-center justify-center p-12">
+                  <div className="text-center">
+                    <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-3xl bg-violet-500/10">
+                      <Package className="h-12 w-12 text-violet-400/50" />
+                    </div>
+                    <span className="text-sm font-medium text-[var(--text-muted)]">
+                      {product.name}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -205,21 +219,15 @@ export default async function ProductDetailPage({
             {/* Price */}
             <div className="mb-6 flex items-baseline gap-3">
               <span className="text-3xl font-extrabold text-[var(--text-primary)] sm:text-4xl">
-                $
-                {product.price.toLocaleString("en-US", {
-                  minimumFractionDigits: 2,
-                })}
+                <FormattedPrice amount={product.price} />
               </span>
               {product.originalPrice && (
                 <>
-                  <span className="text-lg text-[var(--text-muted)] line-through">
-                    $
-                    {product.originalPrice.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                    })}
+                  <span className="text-lg font-medium text-[var(--text-muted)] line-through">
+                    <FormattedPrice amount={product.originalPrice} />
                   </span>
                   <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-sm font-bold text-emerald-400">
-                    Save ${(product.originalPrice - product.price).toFixed(2)}
+                    Save <FormattedPrice amount={product.originalPrice - product.price} />
                   </span>
                 </>
               )}

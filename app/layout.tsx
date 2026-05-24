@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { CartProvider } from "@/lib/cartContext";
+import { CurrencyProvider } from "@/lib/currencyContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -38,15 +39,16 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} h-full antialiased`} data-scroll-behavior="smooth">
       <body className="flex min-h-full flex-col font-sans">
         <Providers>
-          <CartProvider>
-            <Navbar />
-            <main className="flex-1 pt-16">{children}</main>
-            <Footer />
-            <ChatWidget />
-          </CartProvider>
+          <CurrencyProvider>
+            <CartProvider>
+              <Navbar />
+              <main className="flex-1 pt-16">{children}</main>
+              <Footer />
+              <ChatWidget />
+            </CartProvider>
+          </CurrencyProvider>
         </Providers>
       </body>
     </html>
   );
 }
-

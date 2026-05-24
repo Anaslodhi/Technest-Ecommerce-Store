@@ -11,7 +11,7 @@ export const products: Product[] = [
     price: 1499.99,
     originalPrice: 1799.99,
     category: "laptops",
-    image: "/images/products/laptop-1.jpg",
+    image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=800&auto=format&fit=crop",
     description:
       "The ProBook Ultra 16 is a powerhouse for professionals and creators. Featuring a stunning 16-inch Liquid Retina XDR display with ProMotion 120Hz refresh rate, the M3 Pro chip delivers blazing-fast performance for video editing, 3D rendering, and software development. With 18 hours of battery life and 36GB unified memory, you can tackle the most demanding workflows anywhere. The all-aluminum unibody design weighs just 2.14 kg, making it remarkably portable for a 16-inch laptop.",
     shortDescription: "16\" Liquid Retina XDR, M3 Pro chip, 36GB RAM, 512GB SSD",
@@ -44,7 +44,7 @@ export const products: Product[] = [
     price: 1099.99,
     originalPrice: 1299.99,
     category: "laptops",
-    image: "/images/products/laptop-2.jpg",
+    image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?q=80&w=800&auto=format&fit=crop",
     description:
       "The ZenBook 14 OLED combines elegance and power in a compact form factor. Its 14-inch 2.8K OLED HDR display delivers cinema-grade colors with 100% DCI-P3 coverage, making it perfect for content creators and movie enthusiasts. Powered by the latest Intel Core Ultra 7 processor and 16GB LPDDR5x RAM, it handles multitasking with ease. The CNC-machined aluminum chassis weighs only 1.2 kg, and the 75Wh battery provides up to 13 hours of use.",
     shortDescription: "14\" 2.8K OLED, Intel Core Ultra 7, 16GB RAM, 512GB SSD",
@@ -77,7 +77,7 @@ export const products: Product[] = [
     price: 1649.99,
     originalPrice: 1899.99,
     category: "laptops",
-    image: "/images/products/laptop-3.jpg",
+    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop",
     description:
       "The ThinkPad X1 Carbon Gen 12 is the ultimate business ultrabook, refined through 12 generations of engineering excellence. With its 14-inch 2.8K OLED display, Intel Core Ultra 9 processor, and legendary ThinkPad keyboard, it's designed for executives and professionals who demand the best. Military-grade durability (MIL-STD-810H) meets premium design in a carbon fiber chassis weighing just 1.08 kg.",
     shortDescription: "14\" 2.8K OLED, Core Ultra 9, 32GB RAM, 1TB SSD",
@@ -109,7 +109,7 @@ export const products: Product[] = [
     price: 1799.99,
     originalPrice: 2099.99,
     category: "gaming",
-    image: "/images/products/laptop-4.jpg",
+    image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=800&auto=format&fit=crop",
     description:
       "Unleash your gaming potential with the ROG Strix G16. Featuring an Intel Core i9-14900HX processor and NVIDIA GeForce RTX 4070 GPU, this beast handles the latest AAA titles at max settings. The 16-inch QHD+ 240Hz display ensures buttery-smooth gameplay, while the intelligent cooling system with liquid metal thermal compound keeps temperatures in check during intense gaming sessions.",
     shortDescription: "16\" QHD+ 240Hz, i9-14900HX, RTX 4070, 32GB RAM",
@@ -146,7 +146,7 @@ export const products: Product[] = [
     price: 1299.99,
     originalPrice: 1419.99,
     category: "phones",
-    image: "/images/products/phone-1.jpg",
+    image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?q=80&w=800&auto=format&fit=crop",
     description:
       "The Galaxy Ultra S25 redefines smartphone photography with its 200MP main camera featuring an advanced AI-powered image processing pipeline. The 6.9-inch Dynamic AMOLED 2X display with 1-120Hz adaptive refresh rate delivers stunning visuals, while the Snapdragon 8 Gen 4 processor ensures desktop-class performance. With an embedded S Pen, titanium frame, and 5000mAh battery with 45W fast charging, this is the ultimate productivity and creativity tool.",
     shortDescription: "6.9\" Dynamic AMOLED 2X, 200MP camera, S Pen, 5000mAh",
@@ -178,7 +178,7 @@ export const products: Product[] = [
     slug: "iphone-16-pro-max",
     price: 1199.99,
     category: "phones",
-    image: "/images/products/phone-2.jpg",
+    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&auto=format&fit=crop",
     description:
       "iPhone 16 Pro Max takes mobile computing to the next level with the A18 Pro chip, featuring a 6-core GPU that enables console-quality gaming and professional video workflows. The 6.9-inch Super Retina XDR display with Always-On technology and ProMotion delivers peak brightness of 2000 nits. The 48MP Fusion camera system with 5x optical zoom captures stunning detail in any lighting condition.",
     shortDescription: "6.9\" Super Retina XDR, A18 Pro, 48MP camera system",
@@ -211,7 +211,7 @@ export const products: Product[] = [
     price: 999.99,
     originalPrice: 1099.99,
     category: "phones",
-    image: "/images/products/phone-3.jpg",
+    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&auto=format&fit=crop",
     description:
       "The Pixel 9 Pro is Google's most advanced phone, powered by the Tensor G4 chip with AI capabilities that transform how you use your phone. From Magic Eraser to Best Take and Circle to Search, AI is woven into every experience. The 50MP main camera with advanced computational photography delivers stunning shots in any condition, while the 6.3-inch Super Actua display provides vibrant, accurate colors.",
     shortDescription: "6.3\" Super Actua, Tensor G4, 50MP AI camera, 7 years updates",
@@ -243,7 +243,7 @@ export const products: Product[] = [
     price: 799.99,
     originalPrice: 899.99,
     category: "phones",
-    image: "/images/products/phone-4.jpg",
+    image: "https://images.unsplash.com/photo-1533228100845-08145b01de14?q=80&w=800&auto=format&fit=crop",
     description:
       "The OnePlus 13 brings flagship performance at a competitive price with the Snapdragon 8 Elite processor, 16GB of RAM, and a gorgeous 6.82-inch 2K LTPO AMOLED display with 120Hz refresh rate. Hasselblad-tuned cameras deliver natural, true-to-life colors, while the massive 6000mAh battery with 100W SUPERVOOC charging means you're never tethered to a wall outlet for long.",
     shortDescription: "6.82\" 2K AMOLED, Snapdragon 8 Elite, 6000mAh, 100W",
@@ -278,7 +278,7 @@ export const products: Product[] = [
     slug: "airpods-pro-3",
     price: 249.99,
     category: "audio",
-    image: "/images/products/audio-1.jpg",
+    image: "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?q=80&w=800&auto=format&fit=crop",
     description:
       "AirPods Pro 3 deliver the most immersive audio experience with the all-new H3 chip. Featuring Adaptive Audio that intelligently blends Active Noise Cancellation and Transparency mode based on your environment, they automatically adjust to deliver the best listening experience. Personalized Spatial Audio with dynamic head tracking creates a theater-like sound experience. The redesigned silicone ear tips provide an even better seal for improved noise cancellation.",
     shortDescription: "H3 chip, Adaptive ANC, Spatial Audio, USB-C, 30hr battery",
@@ -310,7 +310,7 @@ export const products: Product[] = [
     price: 399.99,
     originalPrice: 449.99,
     category: "audio",
-    image: "/images/products/audio-2.jpg",
+    image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?q=80&w=800&auto=format&fit=crop",
     description:
       "The Sony WH-1000XM6 sets the new gold standard for wireless noise-cancelling headphones. The all-new Integrated Processor V2 delivers industry-leading noise cancellation, while the 40mm carbon fiber composite drivers produce rich, detailed sound across the full frequency range. With 40 hours of battery life, multipoint connectivity, and LDAC Hi-Res Audio support, these headphones offer an uncompromising listening experience for audiophiles and casual listeners alike.",
     shortDescription: "Industry-leading ANC, 40mm drivers, 40hr battery, Hi-Res Audio",
@@ -340,7 +340,7 @@ export const products: Product[] = [
     slug: "bose-qc-ultra-earbuds",
     price: 299.99,
     category: "audio",
-    image: "/images/products/audio-3.jpg",
+    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=800&auto=format&fit=crop",
     description:
       "Bose QuietComfort Ultra Earbuds deliver world-class noise cancellation in a compact, comfortable form factor. Bose Immersive Audio creates a spacious, multi-dimensional sound field that places you at the center of your music. CustomTune technology automatically calibrates the audio and ANC to the unique shape of your ears within seconds. The Fit Kit includes three sizes of stability bands and ear tips for a personalized, secure fit.",
     shortDescription: "World-class ANC, Immersive Audio, CustomTune, 6hr battery",
@@ -374,7 +374,7 @@ export const products: Product[] = [
     slug: "apple-watch-ultra-3",
     price: 799.99,
     category: "wearables",
-    image: "/images/products/watch-1.jpg",
+    image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=800&auto=format&fit=crop",
     description:
       "Apple Watch Ultra 3 is the most rugged and capable Apple Watch ever made, designed for exploration, adventure, and endurance. The 49mm titanium case houses a sapphire crystal display with up to 3000 nits of brightness — readable in any condition. With dual-frequency precision GPS, depth gauge, water temperature sensor, and up to 72 hours of battery life in Low Power Mode, it's built for the most extreme environments on Earth.",
     shortDescription: "49mm titanium, sapphire crystal, 72hr battery, dual GPS",
@@ -405,7 +405,7 @@ export const products: Product[] = [
     price: 449.99,
     originalPrice: 499.99,
     category: "wearables",
-    image: "/images/products/watch-2.jpg",
+    image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=800&auto=format&fit=crop",
     description:
       "The Galaxy Watch 7 Pro is Samsung's most advanced smartwatch, featuring a 47mm titanium case with a sapphire crystal display. The Exynos W1000 3nm processor delivers fast performance and multi-day battery life. Advanced BioActive sensors provide comprehensive health monitoring including body composition, blood pressure (in supported regions), and irregular heart rhythm detection. Wear OS 5 with One UI Watch 6 provides a rich app ecosystem.",
     shortDescription: "47mm titanium, Exynos W1000, BioActive sensors, Wear OS 5",
@@ -440,7 +440,7 @@ export const products: Product[] = [
     price: 1099.99,
     originalPrice: 1299.99,
     category: "tablets",
-    image: "/images/products/tablet-1.jpg",
+    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&auto=format&fit=crop",
     description:
       "The iPad Pro M4 is the most powerful tablet ever made, period. The breakthrough M4 chip with a 10-core CPU and 10-core GPU delivers performance that rivals many desktop computers. The stunning 12.9-inch Ultra Retina XDR display with tandem OLED technology produces 1000 nits sustained full-screen brightness and 1600 nits HDR peak. At just 5.1mm thin, it's the thinnest Apple product ever created.",
     shortDescription: "12.9\" Ultra Retina XDR OLED, M4 chip, 5.1mm thin, Face ID",
@@ -472,7 +472,7 @@ export const products: Product[] = [
     slug: "galaxy-tab-s10-ultra",
     price: 1199.99,
     category: "tablets",
-    image: "/images/products/tablet-2.jpg",
+    image: "https://images.unsplash.com/photo-1589739900266-43b2843f4c12?q=80&w=800&auto=format&fit=crop",
     description:
       "The Galaxy Tab S10 Ultra is Samsung's largest and most powerful tablet with a massive 14.6-inch Dynamic AMOLED 2X display. Powered by the MediaTek Dimensity 9300+, it excels at multitasking with DeX mode and multi-window support. The included S Pen offers low-latency precision for note-taking and digital art. With Galaxy AI features like Note Assist and Chat Assist, it's the ultimate productivity companion.",
     shortDescription: "14.6\" Dynamic AMOLED 2X, Dimensity 9300+, S Pen included",
@@ -507,7 +507,7 @@ export const products: Product[] = [
     slug: "magsafe-duo-charger",
     price: 129.99,
     category: "accessories",
-    image: "/images/products/accessory-1.jpg",
+    image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=800&auto=format&fit=crop",
     description:
       "The MagSafe Duo Charger lets you power up your iPhone and Apple Watch simultaneously with perfect magnetic alignment every time. The foldable design makes it the perfect travel companion — simply fold it flat and slip it into your bag. Supports up to 15W wireless charging for iPhone and fast charging for Apple Watch. The premium silicone and aluminum construction looks great on your desk or nightstand.",
     shortDescription: "Dual wireless charging, foldable design, 15W MagSafe, travel-friendly",
@@ -537,7 +537,7 @@ export const products: Product[] = [
     price: 109.99,
     originalPrice: 149.99,
     category: "accessories",
-    image: "/images/products/accessory-2.jpg",
+    image: "https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?q=80&w=800&auto=format&fit=crop",
     description:
       "The Anker 737 Power Bank packs a massive 24,000mAh capacity with 140W bi-directional USB-C PD charging — powerful enough to charge a MacBook Pro at full speed. The smart digital display shows real-time power output, remaining capacity, and estimated time to full charge. GaN technology keeps it compact despite the high capacity, and PowerIQ 4.0 automatically detects and delivers the optimal charge for any connected device.",
     shortDescription: "24000mAh, 140W USB-C PD, smart display, GaN technology",
@@ -567,7 +567,7 @@ export const products: Product[] = [
     slug: "logitech-mx-master-3s",
     price: 99.99,
     category: "accessories",
-    image: "/images/products/accessory-3.jpg",
+    image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?q=80&w=800&auto=format&fit=crop",
     description:
       "The MX Master 3S is the gold standard for productivity mice. Its 8000 DPI sensor tracks on virtually any surface, including glass. The MagSpeed electromagnetic scroll wheel scrolls through 1,000 lines per second with precision and near-silence. Flow cross-computer control lets you seamlessly work across up to 3 computers, transferring files and text between them. The ergonomic shape with thumb rest provides all-day comfort.",
     shortDescription: "8000 DPI, MagSpeed scroll, quiet clicks, multi-device, USB-C",
@@ -598,7 +598,7 @@ export const products: Product[] = [
     price: 179.99,
     originalPrice: 229.99,
     category: "accessories",
-    image: "/images/products/accessory-4.jpg",
+    image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?q=80&w=800&auto=format&fit=crop",
     description:
       "The Samsung T9 Portable SSD combines blazing-fast USB 3.2 Gen 2×2 speeds with rugged durability. With sequential read/write speeds up to 2,000 MB/s, it transfers a full 4K movie in seconds. The advanced thermal solution with Dynamic Thermal Guard ensures consistent performance under heavy workloads. Drop-resistant up to 3 meters and IP65 rated for dust and water resistance, it's built for creators on the move.",
     shortDescription: "2TB, 2000 MB/s, USB 3.2 Gen 2x2, IP65, drop-resistant",
@@ -629,7 +629,7 @@ export const products: Product[] = [
     slug: "keychron-k3-pro-wireless",
     price: 89.99,
     category: "accessories",
-    image: "/images/products/accessory-5.jpg",
+    image: "https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=800&auto=format&fit=crop",
     description:
       "The Keychron K3 Pro is an ultra-slim wireless mechanical keyboard that doesn't compromise on typing feel. At just 16.5mm thick, it features low-profile Gateron mechanical switches with hot-swappable sockets for easy customization. Connect via Bluetooth 5.1 to up to 3 devices or use the USB-C wired mode for zero-latency gaming. The south-facing RGB backlight with 22 preset effects makes every keystroke a visual experience.",
     shortDescription: "75% layout, low-profile Gateron switches, BT 5.1, RGB, hot-swappable",

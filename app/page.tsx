@@ -10,15 +10,22 @@ import {
   Sparkles,
   Star,
   Send,
+  Clock,
 } from "lucide-react";
 import { getFeaturedProducts } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
+import NewsletterForm from "@/components/NewsletterForm";
+import FormattedPrice from "@/components/FormattedPrice";
 
 const valueProps = [
   {
     icon: Truck,
     title: "Free Shipping",
-    description: "Free delivery on all orders over $50. Fast, reliable shipping worldwide.",
+    description: (
+      <>
+        Free delivery on all orders over <FormattedPrice amount={50} />. Fast, reliable shipping worldwide.
+      </>
+    ),
     gradient: "from-blue-500 to-cyan-500",
     shadow: "shadow-blue-500/25",
   },
@@ -53,7 +60,7 @@ const stats = [
 ];
 
 export default function Home() {
-  const featuredProducts = getFeaturedProducts();
+  const featuredProducts = getFeaturedProducts().slice(0, 6);
 
   return (
     <>
@@ -287,20 +294,7 @@ export default function Home() {
               </p>
 
               {/* Email Input */}
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="flex-1 rounded-xl border border-violet-500/30 bg-white/5 px-5 py-3.5 text-sm text-white placeholder-violet-300/40 outline-none backdrop-blur-sm transition-all duration-200 focus:border-violet-400 focus:ring-2 focus:ring-violet-500/25"
-                />
-                <button
-                  type="button"
-                  className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-violet-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/40"
-                >
-                  Subscribe
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
-              </div>
+              <NewsletterForm />
 
               <p className="mt-4 text-xs text-violet-300/40">
                 No spam, ever. Unsubscribe anytime. We respect your privacy.

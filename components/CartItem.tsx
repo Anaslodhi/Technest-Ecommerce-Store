@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Minus, Plus, Trash2, Package } from "lucide-react";
 import { CartItem as CartItemType } from "@/types";
 import { useCart } from "@/lib/cartContext";
+import { useCurrency } from "@/lib/currencyContext";
 
 interface CartItemProps {
   item: CartItemType;
@@ -11,6 +12,7 @@ interface CartItemProps {
 
 export default function CartItemRow({ item }: CartItemProps) {
   const { updateQuantity, removeItem } = useCart();
+  const { formatPrice } = useCurrency();
   const { product, quantity } = item;
 
   const lineTotal = product.price * quantity;
@@ -47,9 +49,9 @@ export default function CartItemRow({ item }: CartItemProps) {
         {/* Bottom Row: Price, Quantity, Remove */}
         <div className="mt-3 flex flex-wrap items-center gap-3 sm:gap-4">
           {/* Unit Price */}
-          <span className="text-sm font-semibold text-[var(--text-secondary)]">
-            ${product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })} each
-          </span>
+          <p className="mt-1 text-sm font-medium text-[var(--text-primary)]">
+            {formatPrice(product.price)} each
+          </p>
 
           {/* Quantity Selector */}
           <div className="flex items-center overflow-hidden rounded-lg border border-[var(--border-color)] bg-[var(--background)]">
@@ -85,8 +87,8 @@ export default function CartItemRow({ item }: CartItemProps) {
           </button>
 
           {/* Line Total — pushed right */}
-          <span className="ml-auto text-base font-bold text-[var(--text-primary)] sm:text-lg">
-            ${lineTotal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+          <span className="ml-auto font-bold text-[var(--text-primary)]">
+            {formatPrice(lineTotal)}
           </span>
         </div>
       </div>

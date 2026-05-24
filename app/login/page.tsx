@@ -3,7 +3,6 @@
 import { useState, FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 import { Zap, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 
 interface FormErrors {
@@ -45,16 +44,23 @@ export default function LoginPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
+      const usersStr = localStorage.getItem("users") || "[]";
+      const users = JSON.parse(usersStr);
+      const user = users.find((u: any) => u.email === email);
 
-      if (res?.error) {
-        throw new Error(res.error);
+      if (!user) {
+        setErrors({ email: "You don't have an account, please sign up." });
+        return;
       }
 
+      if (user.password !== password) {
+        setErrors({ password: "Invalid credentials" });
+        return;
+      }
+
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      
       router.push("/");
       router.refresh();
     } catch (error: any) {
@@ -96,19 +102,19 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div>
-              <label
-                htmlFor="login-email"
-                className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary)]">
                 Email Address
               </label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
+              <div className="relative mt-2">
+                <Mail className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--text-muted)]" />
                 <input
-                  id="login-email"
+                  id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) setErrors({ ...errors, email: "" });
+                  }}
                   placeholder="you@example.com"
                   className={`w-full rounded-xl border bg-[var(--background-secondary)] py-3 pl-11 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-all duration-200 focus:ring-2 ${
                     errors.email
@@ -124,19 +130,19 @@ export default function LoginPage() {
 
             {/* Password */}
             <div>
-              <label
-                htmlFor="login-password"
-                className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-[var(--text-secondary)]">
                 Password
               </label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
+              <div className="relative mt-2">
+                <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--text-muted)]" />
                 <input
-                  id="login-password"
+                  id="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errors.password) setErrors({ ...errors, password: "" });
+                  }}
                   placeholder="••••••••"
                   className={`w-full rounded-xl border bg-[var(--background-secondary)] py-3 pl-11 pr-12 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-all duration-200 focus:ring-2 ${
                     errors.password

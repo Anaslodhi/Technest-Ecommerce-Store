@@ -1,8 +1,11 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ShoppingCart, ArrowRight, Trash2, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ShoppingCart, ArrowRight, Trash2, ArrowLeft, X, CreditCard, Lock } from "lucide-react";
 import { useCart } from "@/lib/cartContext";
+import { useCurrency } from "@/lib/currencyContext";
 import CartItemRow from "@/components/CartItem";
 
 const SHIPPING_THRESHOLD = 50;
@@ -10,13 +13,43 @@ const TAX_RATE = 0.08;
 
 export default function CartPage() {
   const { items, clearCart, getSubtotal, getItemCount } = useCart();
+  const { formatPrice } = useCurrency();
 
   const subtotal = getSubtotal();
   const itemCount = getItemCount();
   const shipping = subtotal >= SHIPPING_THRESHOLD ? 0 : 9.99;
   const tax = subtotal * TAX_RATE;
   const total = subtotal + shipping + tax;
+  const router = useRouter();
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    // Check mock authentication state
+    const authState = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(authState === "true");
+  }, []);
+
+  const handleProceedToCheckout = () => {
+    if (!isLoggedIn) {
+      router.push("/login");
+    } else {
+      setShowCheckoutModal(true);
+    }
+  };
+
+  const handlePaymentSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsProcessing(true);
+    setTimeout(() => {
+      setIsProcessing(false);
+      setShowCheckoutModal(false);
+      alert("Order placed successfully. Confirmation email sent!");
+      clearCart();
+      router.push("/");
+    }, 1500);
+  };
   // Empty cart state
   if (items.length === 0) {
     return (
@@ -101,7 +134,7 @@ export default function CartPage() {
                     Subtotal ({itemCount} {itemCount === 1 ? "item" : "items"})
                   </span>
                   <span className="font-semibold text-[var(--text-primary)]">
-                    ${subtotal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                    {formatPrice(subtotal)}
                   </span>
                 </div>
 
@@ -111,7 +144,7 @@ export default function CartPage() {
                     {shipping === 0 ? (
                       <span className="text-emerald-400">FREE</span>
                     ) : (
-                      `$${shipping.toFixed(2)}`
+                      formatPrice(shipping)
                     )}
                   </span>
                 </div>
@@ -124,7 +157,7 @@ export default function CartPage() {
 
                 {shipping > 0 && (
                   <p className="text-xs text-[var(--text-muted)]">
-                    Add ${(SHIPPING_THRESHOLD - subtotal).toFixed(2)} more for
+                    Add {formatPrice(SHIPPING_THRESHOLD - subtotal)} more for
                     free shipping
                   </p>
                 )}
@@ -134,7 +167,7 @@ export default function CartPage() {
                     Estimated Tax
                   </span>
                   <span className="font-semibold text-[var(--text-primary)]">
-                    ${tax.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                    {formatPrice(tax)}
                   </span>
                 </div>
 
@@ -145,13 +178,16 @@ export default function CartPage() {
                     Total
                   </span>
                   <span className="text-xl font-extrabold text-[var(--text-primary)]">
-                    ${total.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                    {formatPrice(total)}
                   </span>
                 </div>
               </div>
 
               {/* Checkout Button */}
-              <button className="group relative mt-6 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-4 text-sm font-bold text-white shadow-lg shadow-violet-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/40">
+              <button
+                onClick={handleProceedToCheckout}
+                className="group relative mt-6 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 py-4 text-sm font-bold text-white shadow-lg shadow-violet-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/40"
+              >
                 <span className="relative z-10 flex items-center gap-2">
                   Proceed to Checkout
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -167,6 +203,113 @@ export default function CartPage() {
           </div>
         </div>
       </div>
+      {/* Checkout Modal */}
+      {showCheckoutModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-color)] bg-[var(--card-bg)] shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[var(--border-color)] px-6 py-4">
+              <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                Payment Details
+              </h2>
+              <button
+                onClick={() => setShowCheckoutModal(false)}
+                className="rounded-lg p-1 text-[var(--text-muted)] hover:bg-[var(--background-secondary)] hover:text-[var(--text-primary)]"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <form onSubmit={handlePaymentSubmit} className="p-6">
+              <div className="mb-4">
+                <label htmlFor="cardName" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
+                  Name on Card
+                </label>
+                <input
+                  id="cardName"
+                  type="text"
+                  required
+                  placeholder="John Doe"
+                  className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--background-secondary)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20"
+                />
+              </div>
+              
+              <div className="mb-4">
+                <label htmlFor="cardNumber" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
+                  Card Number
+                </label>
+                <div className="relative">
+                  <CreditCard className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
+                  <input
+                    id="cardNumber"
+                    type="text"
+                    required
+                    placeholder="0000 0000 0000 0000"
+                    pattern="\d{4}\s?\d{4}\s?\d{4}\s?\d{4}"
+                    className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--background-secondary)] py-3 pl-10 pr-4 text-sm text-[var(--text-primary)] outline-none focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20"
+                  />
+                </div>
+              </div>
+              
+              <div className="mb-6 flex gap-4">
+                <div className="flex-1">
+                  <label htmlFor="expiryDate" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
+                    Expiry Date
+                  </label>
+                  <input
+                    id="expiryDate"
+                    type="text"
+                    required
+                    placeholder="MM/YY"
+                    pattern="\d{2}/\d{2}"
+                    className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--background-secondary)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label htmlFor="cvc" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
+                    CVC
+                  </label>
+                  <input
+                    id="cvc"
+                    type="text"
+                    required
+                    placeholder="123"
+                    pattern="\d{3,4}"
+                    className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--background-secondary)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20"
+                  />
+                </div>
+              </div>
+              
+              <div className="mb-6">
+                <label htmlFor="shippingAddress" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
+                  Shipping Address
+                </label>
+                <textarea
+                  id="shippingAddress"
+                  required
+                  rows={2}
+                  placeholder="123 Tech Street, Silicon Valley, CA"
+                  className="w-full resize-none rounded-xl border border-[var(--border-color)] bg-[var(--background-secondary)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isProcessing}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-violet-600 py-3.5 text-sm font-bold text-white transition-colors hover:bg-violet-700 disabled:bg-violet-600/70"
+              >
+                {isProcessing ? (
+                  "Processing..."
+                ) : (
+                  <>
+                    <Lock className="h-4 w-4" />
+                    Pay {formatPrice(total)}
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -11,12 +11,12 @@ import {
 
 const teamMembers = [
   {
-    name: "Anas Lodhi",
-    role: "Full-Stack Developer",
-    bio: "Responsible for the Next.js frontend architecture, UI/UX design system, and overall project structure.",
+    name: "Syed Aneeq Ali",
+    role: "Frontend UI/UX Developer",
+    bio: "Responsible for Next.js frontend architecture, UI/UX design system, and overall layout.",
   },
   {
-    name: "Team Member 2",
+    name: "Anas Lodhi",
     role: "Backend & AI Engineer",
     bio: "Built the FastAPI backend, RAG chatbot integration with Qdrant Cloud, and OpenAI-powered product discovery.",
   },

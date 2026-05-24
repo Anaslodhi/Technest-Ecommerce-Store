@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Star, ShoppingCart } from "lucide-react";
 import { Product } from "@/types";
 import { cn } from "@/lib/utils";
+import FormattedPrice from "@/components/FormattedPrice";
 
 interface ProductCardProps {
   product: Product;
@@ -37,17 +39,26 @@ export default function ProductCard({ product, className }: ProductCardProps) {
 
       {/* Image Container */}
       <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-[var(--background-secondary)] to-[var(--card-bg)]">
-        {/* Placeholder gradient for product image */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900/50">
-            <div className="text-center">
-              <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-500/10">
-                <ShoppingCart className="h-8 w-8 text-violet-400/60" />
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800/50 to-slate-900/50">
+              <div className="text-center">
+                <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-500/10">
+                  <ShoppingCart className="h-8 w-8 text-violet-400/60" />
+                </div>
+                <span className="text-xs text-[var(--text-muted)]">{product.category}</span>
               </div>
-              <span className="text-xs text-[var(--text-muted)]">{product.category}</span>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -102,11 +113,11 @@ export default function ProductCard({ product, className }: ProductCardProps) {
         {/* Price — pushed to bottom */}
         <div className="mt-auto flex items-center gap-2">
           <span className="text-lg font-bold text-[var(--text-primary)] sm:text-xl">
-            ${product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            <FormattedPrice amount={product.price} />
           </span>
           {product.originalPrice && (
             <span className="text-sm text-[var(--text-muted)] line-through">
-              ${product.originalPrice.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+              <FormattedPrice amount={product.originalPrice} />
             </span>
           )}
         </div>

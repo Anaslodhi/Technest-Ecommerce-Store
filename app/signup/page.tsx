@@ -60,22 +60,21 @@ export default function SignupPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
+      const usersStr = localStorage.getItem("users") || "[]";
+      const users = JSON.parse(usersStr);
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to create account");
+      if (users.find((u: any) => u.email === email)) {
+        setErrors({ email: "Email is already in use." });
+        return;
       }
+
+      users.push({ name, email, password });
+      localStorage.setItem("users", JSON.stringify(users));
 
       alert("Account created successfully! Please log in.");
       router.push("/login");
     } catch (error: any) {
-      setErrors({ email: error.message });
+      setErrors({ email: error.message || "Something went wrong" });
     } finally {
       setIsSubmitting(false);
     }
@@ -112,19 +111,19 @@ export default function SignupPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Full Name */}
             <div>
-              <label
-                htmlFor="signup-name"
-                className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]"
-              >
+              <label htmlFor="name" className="block text-sm font-medium text-[var(--text-secondary)]">
                 Full Name
               </label>
-              <div className="relative">
-                <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
+              <div className="relative mt-2">
+                <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--text-muted)]" />
                 <input
-                  id="signup-name"
+                  id="name"
                   type="text"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    if (errors.name) setErrors({ ...errors, name: "" });
+                  }}
                   placeholder="John Doe"
                   className={`w-full rounded-xl border bg-[var(--background-secondary)] py-3 pl-11 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-all duration-200 focus:ring-2 ${
                     errors.name
@@ -140,19 +139,19 @@ export default function SignupPage() {
 
             {/* Email */}
             <div>
-              <label
-                htmlFor="signup-email"
-                className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-[var(--text-secondary)]">
                 Email Address
               </label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
+              <div className="relative mt-2">
+                <Mail className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--text-muted)]" />
                 <input
-                  id="signup-email"
+                  id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) setErrors({ ...errors, email: "" });
+                  }}
                   placeholder="you@example.com"
                   className={`w-full rounded-xl border bg-[var(--background-secondary)] py-3 pl-11 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-all duration-200 focus:ring-2 ${
                     errors.email
@@ -168,20 +167,20 @@ export default function SignupPage() {
 
             {/* Password */}
             <div>
-              <label
-                htmlFor="signup-password"
-                className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-[var(--text-secondary)]">
                 Password
               </label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
+              <div className="relative mt-2">
+                <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--text-muted)]" />
                 <input
-                  id="signup-password"
+                  id="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Minimum 8 characters"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errors.password) setErrors({ ...errors, password: "" });
+                  }}
+                  placeholder="••••••••"
                   className={`w-full rounded-xl border bg-[var(--background-secondary)] py-3 pl-11 pr-12 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-all duration-200 focus:ring-2 ${
                     errors.password
                       ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/20"
@@ -204,20 +203,21 @@ export default function SignupPage() {
 
             {/* Confirm Password */}
             <div>
-              <label
-                htmlFor="signup-confirm"
-                className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]"
-              >
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-[var(--text-secondary)]">
                 Confirm Password
               </label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
+              <div className="relative mt-2">
+                <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--text-muted)]" />
                 <input
-                  id="signup-confirm"
+                  id="confirmPassword"
                   type={showConfirm ? "text" : "password"}
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Re-enter your password"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    if (errors.confirmPassword)
+                      setErrors({ ...errors, confirmPassword: "" });
+                  }}
+                  placeholder="••••••••"
                   className={`w-full rounded-xl border bg-[var(--background-secondary)] py-3 pl-11 pr-12 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-all duration-200 focus:ring-2 ${
                     errors.confirmPassword
                       ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/20"
